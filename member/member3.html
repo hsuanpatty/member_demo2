@@ -1,0 +1,133 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>凱旋旅行社會員登入 - 此團尚未出發</title>
+    <link rel="shortcut icon" href="https://www.artisan.com.tw/images/artisan.ico" />
+    <link rel="stylesheet" type="text/css" href="./css/layout_2024.css" />
+    <link rel="stylesheet" href="./css/normalize.css" />
+    <script src="js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./css/member2025.css" />
+    <link rel="stylesheet" type="text/css" href="./css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="./css/all.new.min.css" />
+  </head>
+  <body>
+    <form name="form1" method="post" action="./Member2.aspx" id="form1">
+      <div id="content">
+        <div class="container" id="content_member">
+          <div class="form-imfo">
+            <div class="member-box">
+              <div class="row">
+                <!-- 左側登入表單 -->
+                <div class="member-box-left">
+                  <div class="logo"><h1>旅客登入</h1></div>
+                  <div class="form-group">
+                    <label for="txbSN">帳號</label>
+                    <div class="input-with-icon">
+                      <i class="fas fa-user"></i>
+                      <input type="text" id="txbSN" class="form-control" placeholder="帳號預設為身分證字號" />
+                    </div>
+                    <div class="status-message" id="statusMessageSN"></div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="txbPW">密碼</label>
+                    <div class="input-with-icon">
+                      <i class="fas fa-lock"></i>
+                      <input type="password" id="txbPW" class="form-control" placeholder="密碼預設為西元出生年月日" />
+                    </div>
+                    <div class="status-message" id="statusMessagePW"></div>
+                  </div>
+
+                  <button type="button" id="loginBtn" class="submit-btn">登入</button>
+                </div>
+
+                <!-- 右側說明與狀態訊息 -->
+                <div class="member-box-right">
+                  <p>
+                    * 帳號預設為<span class="style_member_strong">身分證字號</span><br />
+                    * 密碼預設為<span class="style_member_strong">西元出生年月日</span>，ex：出生日為1950年 1月2日，請輸入：19500102<br />
+                    <span class="p-dashed-line"></span>
+                    ※嚴格保護每一位客人的個人資料，未經客人同意絕不對外揭露!並遵守法律上權利責任規範。<br />
+                  </p>
+
+                  <a class="material" href="http://www.artisan.com.tw/Notes.aspx">個人資料保護說明</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Modal -->
+    <div id="statusModal" class="modal">
+      <div class="modal-content">
+        <div id="modalMessage"></div>
+        <button class="modal-close" id="modalClose">關閉</button>
+      </div>
+    </div>
+
+    <script>
+      $(function () {
+        $("#loginBtn").on("click", function () {
+          var account = $("#txbSN").val().trim();
+          var password = $("#txbPW").val().trim();
+
+          // 先清空訊息
+          $("#statusMessageSN").text("");
+          $("#statusMessagePW").text("");
+
+          var hasError = false;
+
+          // 身分證格式驗證 (台灣)
+          var idPattern = /^[A-Z][12]\d{8}$/i; // 例：A123456789
+          if (account === "") {
+            $("#statusMessageSN").text("請輸入帳號");
+            hasError = true;
+          } else if (!idPattern.test(account)) {
+            $("#statusMessageSN").text("帳號格式錯誤，請輸入正確身分證字號");
+            hasError = true;
+          }
+
+          // 密碼驗證 YYYYMMDD
+          var datePattern = /^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/;
+          if (password === "") {
+            $("#statusMessagePW").text("請輸入密碼");
+            hasError = true;
+          } else if (!datePattern.test(password)) {
+            $("#statusMessagePW").text("密碼格式錯誤，請輸入西元生日，範例：19500102");
+            hasError = true;
+          }
+
+          if (hasError) return;
+
+          // 模擬後端判斷各種情況
+          var groupNotDeparted = false; // 是否尚未出發
+          var returnedOverMonth = true; // 是否返國超過一個月且無其他報名
+
+          if (groupNotDeparted) {
+            $("#modalMessage").html("此團尚未出發");
+          } else if (returnedOverMonth) {
+            $("#modalMessage").html("感謝您的意見回饋<br>期待下次再相逢");
+          } else {
+            $("#modalMessage").html("登入成功！");
+          }
+
+          $("#statusModal").css("display", "flex");
+        });
+
+        // 關閉 modal
+        $("#modalClose").on("click", function () {
+          $("#statusModal").hide();
+        });
+
+        // 點背景關閉
+        $("#statusModal").on("click", function (e) {
+          if (e.target === this) $(this).hide();
+        });
+      });
+    </script>
+  </body>
+</html>

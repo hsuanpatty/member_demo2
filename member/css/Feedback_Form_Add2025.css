@@ -1,0 +1,666 @@
+/* ===============================
+   全域與主要區塊
+================================ */
+:root {
+  --red: #b32e2e;
+  --red-haver: #e00303;
+  --page: #fd4044;
+  --red-title: #ce2222;
+  --text-gray: #595959;
+  --primary: #575757;
+  --background: #ffffff;
+  --white: #ffffff;
+  --sheet-gray: #f2f2f2;
+  --lightgray: #ccc;
+  --darkgray: #555;
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: "Noto Sans TC", "微軟正黑體", Arial, sans-serif;
+  color: var(--text-gray);
+  margin: 0;
+  background: var(--background);
+  letter-spacing: 0.02rem;
+}
+
+p, li { letter-spacing: 0.02rem; }
+
+#content {
+  width: 100%;
+  max-width: 1320px;
+  margin: 60px auto 0;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) { #content { margin-top: 120px; } }
+@media (min-width: 992px) { #content { margin-top: 110px; } }
+
+
+/* ===============================
+   標題與說明
+================================ */
+#question { margin-top: 30px; }
+
+.style1, .question_con {
+  width: 100%;
+  max-width: 1000px;
+  margin: 10px auto;
+  letter-spacing: 0.1rem;
+}
+
+.style1 { 
+  font-size:22px;
+  color: #660099; 
+  padding-top: 10px;
+}
+
+.question_con {
+  font-size: 16px; 
+  color: #666; 
+  line-height: 28px; 
+}
+
+/* ===============================
+   團號區塊
+================================ */
+.test {
+  width: 100%;
+  max-width: 1000px;
+  margin: 20px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+.question_Data,
+.question_Data2 {
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1678b1;
+  letter-spacing: 0.08rem;
+  line-height: 1.6;
+}
+
+/* 團號與團名佔一整行 */
+.test > .question_Data:nth-child(1),
+.test > .question_Data2:nth-child(2) {
+  width: 100%;
+}
+
+/* ===============================
+   題目區
+================================ */
+.question_list {
+  width: 100%;
+  max-width: 1000px;
+  margin: 20px auto;           
+  padding: 30px;              
+  box-sizing: border-box;
+  
+  /* 文字樣式 */
+  font-size: 18px;             
+  line-height: 1.5;           
+  color: #1e293b;              
+  font-weight: 500;
+  
+  /* 卡片設計 */
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;   
+  border-radius: 12px;        
+  
+  /* 柔和的立體陰影 */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 
+              0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 滑鼠懸停效果：讓題目更有互動感 */
+.question_list:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: #e2e8f0;
+}
+
+/* 題目編號或重點裝飾（左側藍色小條）*/
+.question_list::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: var(--page);   
+  opacity: 0;                 
+  transition: opacity 0.2s;
+}
+
+.question_list:hover::before {
+  opacity: 1;                 
+}
+
+/* 選項容器 */
+.question_list span {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 10px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+/* 圈圈 + 文字 = 一整組，整行換行 */
+.question_list span > label,
+.question_list span > span,
+.question_list span > div {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;  
+  max-width: 100%;
+}
+
+.question_list span label {
+  display: inline-flex;     
+  align-items: center;
+  white-space: nowrap;        
+  line-height: 1.6;
+  cursor: pointer;
+
+  /* --- 質感美化 --- */
+  padding: 10px 18px;         
+  border-radius: 8px;         
+  margin: 4px 0;
+  font-size: 15px;
+  font-weight: 500;           
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+
+  background-color: #f8fafc;  
+  border: 1px solid #e2e8f0;  
+  color: #64748b;             
+}
+
+/* 滑鼠懸停效果 (Hover) */
+.question_list span label:hover {
+  background-color: #f1f5f9;  
+  border-color: #cbd5e1;
+  color: #475569;
+  transform: translateY(-1px);
+}
+
+.question_list span label:has(input:checked) {
+
+  background-color: #eef2ff;  
+  border-color: var( --page);      
+  color: #4f46e5;             
+  
+  box-shadow: inset 0 0 0 1px rgba(99, 102, 241, 0.1), 0 4px 6px -1px rgba(99, 102, 241, 0.1);
+}
+
+.question_list span label input[type="radio"],
+.question_list span label input[type="checkbox"] {
+  accent-color: var( --page); 
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+/* 圈圈大小、間距 */
+.question_list input[type="radio"],
+.question_list input[type="checkbox"] {
+  flex-shrink: 0;
+  margin: 0 5px;
+  cursor: pointer;
+
+
+  width: 18px;       
+  height: 18px;
+  accent-color: var( --page);
+  
+  vertical-align: middle;
+  position: relative;
+  top: -1px; 
+}
+
+/* 文字輸入框 */
+.question_list input[type="text"],
+.question_list textarea {
+  width: 100%;
+  padding: 10px 16px;
+  box-sizing: border-box;
+  margin-top: 10px;           
+  
+  /* 文字樣式 */
+  font-size: 15px;
+  color: #334155;
+  line-height: 1.6;
+  
+  /* 外框美化 */
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  
+  /* 動態效果 */
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  outline: none;
+}
+
+/* 針對 input 的高度 */
+.question_list input[type="text"] {
+  height: 44px;
+}
+
+.question_list textarea {
+  min-height: 20px;         
+  resize: vertical;          
+}
+
+/* 佔位符樣式 */
+.question_list input[type="text"]::placeholder,
+.question_list textarea::placeholder {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* 懸停與焦點狀態 (合併) */
+.question_list input[type="text"]:hover,
+.question_list textarea:hover {
+  border-color: #94a3b8;
+}
+
+.question_list input[type="text"]:focus,
+.question_list textarea:focus {
+  border-color: var(--page);
+  background-color: #fff;
+  
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); 
+  transform: translateY(-1px);
+}
+
+
+/* Q13 桌機不換行 */
+.question_list.q13 span { flex-wrap: nowrap; }
+
+/* Q15 文字框 */
+#Q15_1_1,
+#Q15_1_2 { width: 60px; margin-right: 6px; }
+
+#Q16 {
+  padding-top: 15px;
+}
+
+#Q16 textarea,
+#Q17 {
+  display: block;
+  width: 100%;
+  min-height: 120px;          
+  padding: 16px 18px;        
+  line-height: 1.8;          
+  box-sizing: border-box;
+  
+  /* 顏色與邊框 */
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1; 
+  border-radius: 10px;        
+  font-size: 15px;
+  color: #334155;             
+  
+  margin-top: 12px;
+  margin-bottom: 25px;
+  resize: vertical;           
+  
+  transition: all 0.25s ease;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* 佔位符 (Placeholder) */
+#Q16 textarea::placeholder {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+/* 滑鼠懸停 */
+#Q16 textarea:hover {
+  border-color: #94a3b8;
+}
+
+/* 獲取焦點 (Focus) 狀態 */
+#Q16 textarea:focus {
+  outline: none;
+  border-color: var( --page);      /* 主題靛藍 */
+  background-color: #fff;
+  
+  /* 亮眼的焦點環 */
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1), 
+              inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  
+  transform: translateY(-1px);
+}
+
+/* 自定義滾動條 (選配，適用於 Chrome/Edge/Safari) */
+#Q16 textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+#Q16 textarea::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+#Q16 textarea::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+#Q16 textarea::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* ===============================
+   同意勾選
+================================ */
+.agree {
+  width: 100%;
+  max-width: 1200px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+}
+
+.agree span { 
+  color: var(--red-title); 
+  font-size: 16px;
+}
+
+/* ===============================
+   問卷底部置中
+================================ */
+.question_bottom {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+  align-items: stretch;
+}
+
+.question_bottom h3{
+  padding: 10px 0;
+}
+
+#Q15 {
+  padding-top: 15px;
+} 
+
+#Q17 {
+  margin-top: 15px;
+}
+
+[type="checkbox"] {
+  cursor: pointer;
+}
+
+/* ===============================
+   響應設定
+================================ */
+@media (max-width: 992px) { 
+  .test { gap: 10px 15px; } 
+  .question_bottom br { display: none; }
+  .notice-box-scroll ol { padding-left: 0; }
+  
+}
+
+@media (max-width: 768px) {
+  .test { flex-direction: column; }
+  .question_Data,
+  .question_Data2,
+  .question_list,
+  .agree,
+  .question_bottom {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .question_list { font-size: 16px; }
+
+  .question_list > span {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 7px;
+    margin-top: 0;
+    padding-top: 15px;
+  }
+
+  /*  Q13 額外說明文字獨立一行 */
+  .question_list.q13 > span > span {
+    grid-column: 1 / -1;
+    font-size: 14px;
+    margin: 0;
+    white-space: normal;
+    color: #777;
+  }
+
+
+  /* Q1 特殊間距 */
+  .question_list span#Q1 { gap: 6px 14px; }
+
+  .question_list input[type="radio"],
+  .question_list input[type="checkbox"] {
+    margin-right: 5px;
+  } 
+}
+
+@media (max-width: 575px) {
+  #question { margin-top: 20px; }
+
+   #Q15 > div:first-child input {
+    width: 40%;  
+    margin-bottom: 8px;
+  }
+
+  #Q15 > div:last-child input {
+    width: 100%;
+  }
+
+  #Q16 input[type="text"] {
+    height: 120px;        
+  }
+
+   #Q17 {
+     height: 120px; 
+   }
+   
+}
+
+/* ===============================
+   說明文字 + textarea
+================================ */
+.question_bottom p { 
+  color: var(--red-haver);
+  font-size: 17px;
+  line-height: 25px; 
+  letter-spacing: 0.05rem;
+}
+
+.notice-box-scroll {
+  width: 100%;
+  max-width: 1000px;  
+  margin: 20px auto;
+  padding: 12px 16px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  line-height: 1.6;
+  font-size: 15px;
+  color: #555;
+  overflow-y: auto;       
+}
+
+.notice-box-scroll .notice-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: left;    
+}
+
+.notice-box-scroll ol {
+  margin: 0;
+  text-align: left;  
+}
+
+.notice-box-scroll li {
+  margin-bottom: 8px;
+}
+
+/* ===============================
+   按鈕
+================================ */
+.buttom {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 30px;
+}
+
+.question_buttom {
+  width: 100px;
+  height: 44px;
+  background: var(--lightgray);
+  text-align: center;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.question_buttom a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 44px;
+  text-decoration: none;
+  color: var(--darkgray);
+}
+
+.question_buttom:hover {
+  background-color: var(--red-haver);
+  transform: translateY(-1px);
+}
+
+.question_buttom:hover a {
+  color: #fff;
+}
+
+
+/* Modal */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 380px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalPop 0.4s;
+}
+
+.success-icon {
+  width: 65px;
+  height: 65px;
+  background: #4caf50;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin: 0 auto 20px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.close-btn:hover {
+  color: #ce2222;
+}
+
+.modal-logout-btn {
+  display: inline-block;
+  background: #333;
+  color: #fff;
+  padding: 12px 40px;
+  border-radius: 30px;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.modal-logout-btn:hover {
+  background: #000;
+}
+
+.question_buttom {
+  width: 120px;
+  height: 45px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ce2222;
+  text-align: center;
+}
+
+.question_buttom a {
+  display: block;
+  line-height: 45px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#cancelBtn {
+  background: #999;
+}
+
+/* loading 狀態 */
+.loading {
+  background: #aaa;
+  pointer-events: none;
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

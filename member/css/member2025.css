@@ -1,0 +1,296 @@
+/* ===============================
+   1. 變數與全域設定 (Modern Update)
+================================ */
+:root {
+  --primary-red: #ce2222;
+  --dark-red: #a01a1a;
+  --bright-red: #f83a3a;
+  --bg-gray: #f0f2f5;
+  --text-main: #2d3436;
+  --text-muted: #636e72;
+  --white: #ffffff;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Noto Sans TC", "微軟正黑體", sans-serif;
+  background: var(--bg-gray);
+  color: var(--text-main);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ===============================
+   2. 容器佈局
+================================ */
+#content {
+  width: 100%;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.member-box {
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.member-box .row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* ===============================
+   3. 左右分欄邏輯
+================================ */
+.member-box-left {
+  flex: 1 1 450px;
+  padding: 50px;
+  background: var(--white);
+}
+
+.member-box-right {
+  flex: 1 1 350px;
+  padding: 50px;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+  .member-box-left, .member-box-right {
+    padding: 30px 20px;
+    flex: 1 1 100%;
+  }
+  .member-box-right {
+    border-left: none;
+    border-top: 1px solid #eee;
+  }
+}
+
+/* ===============================
+   4. 左側：表單樣式優化
+================================ */
+.logo {
+  position: relative;
+}
+
+.logo h1 {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text-main);
+  margin: 0 20px 20px;
+  text-align: left;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.logo h1::after {
+    content: "";
+    position: absolute;
+    left: -15px;
+    top: 3px;
+    width: 4px;
+    height: 30px;
+    background: var(--primary-red);
+    border-radius: 2px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #b2bec3;
+  transition: var(--transition);
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px 15px 14px 48px;
+  border: 2px solid #e1e1e1;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: var(--transition);
+  background: var(--white);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 4px rgba(206, 34, 34, 0.1);
+}
+
+.form-control:focus + i {
+  color: var(--primary-red);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(206, 34, 34, 0.2);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(206, 34, 34, 0.3);
+  filter: brightness(1.1);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* ===============================
+   5. 右側：提示文字優化
+================================ */
+.member-box-right p {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  line-height: 30px;
+}
+
+.style_member_strong {
+  color: var(--primary-red);
+  font-weight: 700;
+  background: rgba(206, 34, 34, 0.05);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.p-dashed-line {
+  display: block;
+  border-bottom: 1px dashed #ddd;
+  margin: 25px 0;
+}
+
+.material {
+  color: var(--primary-red);
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.material::before {
+  content: "🛡️";
+  margin-right: 8px;
+}
+
+.material:hover {
+  color: var(--primary-red);
+  transform: translateX(3px);
+}
+
+/* ===============================
+   6. Modal 彈窗美化
+================================ */
+.modal {
+  display: none; /* 由 JS 切換 */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: var(--white);
+  padding: 60px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  animation: modalIn 0.3s ease-out;
+}
+
+@keyframes modalIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+#modalMessage {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: 0.05rem;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+
+.modal-close {
+  width: 50%;
+  padding: 12px;
+  background: #f03742;
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.modal-close:hover {
+  background: rgb(133, 4, 4);
+}
+
+
+.status-message {
+    height: 22px;
+    min-height: 22px;
+    line-height: 20px;
+    font-size: 14px;
+    color: var(--primary-red);
+    margin-top: 5px;
+    transition: var(--transition);
+}

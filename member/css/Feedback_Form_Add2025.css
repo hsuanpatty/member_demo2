@@ -135,7 +135,7 @@ p, li { letter-spacing: 0.02rem; }
   top: 0;
   bottom: 0;
   width: 4px;
-  background-color: var(--page);   
+  background-color: hsl(0, 90%, 67%);   
   opacity: 0;                 
   transition: opacity 0.2s;
 }

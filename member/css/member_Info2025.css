@@ -4,6 +4,7 @@
 :root {
   --red: rgb(179, 46, 46);
   --red-haver: rgb(224, 3, 3);
+  --dark-red: #a01a1a;
   --page:#fd4044;
   --red-title:#ce2222;
   --red-cus1-haver:#ff1a1e;
@@ -127,6 +128,16 @@ p, li {
   clear: both;
 }
 
+@media (min-width: 1400px) { 
+  #main_customer_tool {
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
 /* ---------- 名稱 + 編輯按鈕 ---------- */
 .name_edit {
   display: flex;
@@ -167,19 +178,39 @@ p, li {
   color: var(--primary);
 }
 
-#LogoutBtn p {
-  text-align: center;
+#LogoutBtn {
+  display: block;
+  width: fit-content;
+  margin: 3px auto 0;  /* 水平置中 */
+
+  padding: 14px 90px;     /* 變大內距 */
+  background: linear-gradient(135deg, var(--red-title), var(--dark-red));
   color: var(--white);
-  background-color: var(--red);
-  padding: 6px 12px;
-  border-radius: 6px;
+  text-decoration: none;
+
+  border-radius: 10px;    
+  font-size: 18px;        
+  font-weight: 600;
+  letter-spacing: 1px;
+
   transition: var(--transition);
 }
 
-#LogoutBtn:hover p {
-  background-color: var(--red-haver);
+
+
+#LogoutBtn:hover {
+  background: var(--red-haver);
+  transform: translateY(-1px);
 }
 
+@media (max-width: 575.98px) {
+  #LogoutBtn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 16px;
+  }
+}
 
 /* ---------- 表格區 ---------- */
 .cus1_title {
@@ -231,7 +262,6 @@ p, li {
 /* 團名欄 */
 .cus1_title td:nth-child(2) {
   text-align: left;
-  padding-left: 12px;
   line-height: 1.4;
 }
 
@@ -407,13 +437,8 @@ p, li {
     gap: 21px;              /* 行間距 */
   }
 
-  .member_edit_tool a {
-    width: 20%;     
+  .member_edit_tool a {  
     padding-top: 5px;
-  }
-
-  #LinkButton1  {
-    width: 74%;
   }
 }
 
@@ -465,7 +490,7 @@ p, li {
 /* ---------- 分頁 ---------- */
 #cus_page {
     text-align: center;
-    padding: 20px 0 0;
+    padding: 20px 0 10px;
     font-family: "微軟正黑體", Arial, sans-serif;
     font-size: 14px;
     color: #666666;

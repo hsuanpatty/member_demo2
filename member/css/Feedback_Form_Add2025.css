@@ -107,7 +107,7 @@ p, li { letter-spacing: 0.02rem; }
   font-weight: 500;
   
   /* 卡片設計 */
-  background-color: rgb(226 234 251);
+  background-color: rgb(233, 233, 233);
   border: 1px solid #f1f5f9;   
   border-radius: 12px;        
   
@@ -150,7 +150,6 @@ p, li { letter-spacing: 0.02rem; }
   flex-wrap: wrap;
   gap: 12px 10px;
   align-items: center;
-  margin-top: 6px;
 }
 
 /* 圈圈 + 文字 = 一整組，整行換行 */
@@ -178,7 +177,7 @@ p, li { letter-spacing: 0.02rem; }
   font-weight: 500;           
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
 
-  background-color: #f8fafc;  
+  background-color: #fff;  
   border: 1px solid #e2e8f0;  
   color: #64748b;             
 }
@@ -279,6 +278,43 @@ p, li { letter-spacing: 0.02rem; }
   
   box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); 
   transform: translateY(-1px);
+}
+
+
+/* 星星 */
+.question_list .q-title {
+  align-items: start;
+  padding-bottom: 10px;
+}
+
+.question_list.required {
+  position: relative;
+  padding-left: 20px; /* 給星號空間 */
+}
+
+.q-title::after {
+  content: "*";
+  color: red;
+  font-weight: bold;
+  margin-left: 4px;
+}
+
+/* 錯誤題目隱藏紅星 */
+.question_list.error .q-title::after {
+  content: "";
+}
+
+/* 必填未填（input / textarea） */
+.question_list input:invalid,
+.question_list textarea:invalid {
+  border-color: #ef4444;
+  background-color: #fff5f5;
+}
+
+/* focus 時更明顯 */
+.question_list input:invalid:focus,
+.question_list textarea:invalid:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
 }
 
 
@@ -413,6 +449,13 @@ p, li { letter-spacing: 0.02rem; }
 /* ===============================
    響應設定
 ================================ */
+@media (min-width: 1400px) {
+  .question_list {
+    background-color: rgb(243, 243, 243);
+  }
+}
+
+
 @media (max-width: 992px) { 
   .test { gap: 10px 15px; } 
   .question_bottom br { display: none; }
@@ -438,7 +481,7 @@ p, li { letter-spacing: 0.02rem; }
     grid-template-columns: auto 1fr;
     gap: 6px 7px;
     margin-top: 0;
-    padding-top: 15px;
+    padding: 10px 0;
   }
 
   /*  Q13 額外說明文字獨立一行 */
@@ -481,6 +524,8 @@ p, li { letter-spacing: 0.02rem; }
    }
    
 }
+
+
 
 /* ===============================
    說明文字 + textarea

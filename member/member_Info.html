@@ -222,58 +222,11 @@
       <script src="./js/index_2020.js"></script>
       <!-- rwdImageMaps -->
       <script src="./js/jquery.rwdImageMaps.min.js"></script>
-      <!-- 取消訂閱 Email -->
-      <script>
-        $(document).ready(function () {
-          $(".epaper-btn-flat").on("click", function (e) {
-            var emailValue = $.trim($("#txbEMail").val());
-            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
-            if (emailValue === "") {
-              alert("「電子郵件」欄位不可為空白");
-              $("#txbEMail").focus();
-              e.preventDefault();
-              return false;
-            }
-
-            if (!emailPattern.test(emailValue)) {
-              alert("Email格式不正確");
-              $("#txbEMail").focus();
-              e.preventDefault();
-              return false;
-            }
-          });
-        });
-      </script>
       <script>
         $(document).ready(function (e) {
           $("img[usemap]").rwdImageMaps();
         });
-      </script>
-
-      <script type="text/javascript">
-        //<![CDATA[
-        var Page_Validators = new Array(document.getElementById("revEmail"));
-        //]]>
-      </script>
-
-      <script type="text/javascript" src="/js/HeaderMenu_2024.js"></script>
-      <script type="text/javascript">
-        //<![CDATA[
-
-        var Page_ValidationActive = false;
-        if (typeof ValidatorOnLoad == "function") {
-          ValidatorOnLoad();
-        }
-
-        function ValidatorOnSubmit() {
-          if (Page_ValidationActive) {
-            return ValidatorCommonOnSubmit();
-          } else {
-            return true;
-          }
-        }
-        //]]>
       </script>
     </form>
   </body>

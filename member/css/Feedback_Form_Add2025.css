@@ -107,7 +107,7 @@ p, li { letter-spacing: 0.02rem; }
   font-weight: 500;
   
   /* 卡片設計 */
-  background-color: #ffffff;
+  background-color: rgb(226 234 251);
   border: 1px solid #f1f5f9;   
   border-radius: 12px;        
   

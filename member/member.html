@@ -70,65 +70,163 @@
     </div>
 
     <script>
+      /* ==================================================
+   共用 Modal 控制
+================================================== */
+      const modal = document.getElementById("successModal");
+      const closeBtn = document.getElementById("closeBtn");
+
+      const submitBtn = document.getElementById("submitBtn");
+      const form = document.getElementById("form1");
+
+      let iframe = document.createElement("iframe");
+      iframe.name = "hidden_iframe";
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+      form.target = "hidden_iframe";
+
+      submitBtn?.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        // 清除錯誤
+        document.querySelectorAll(".question_list").forEach((el) => {
+          el.classList.remove("error");
+          el.querySelector(".required-text")?.remove();
+        });
+
+        let isValid = true;
+        const requiredBlocks = form.querySelectorAll(".question_list.required");
+
+        requiredBlocks.forEach((block) => {
+          const inputs = block.querySelectorAll("input, textarea");
+          let hasValue = false;
+
+          inputs.forEach((input) => {
+            if ((input.type === "radio" || input.type === "checkbox") && input.checked) {
+              hasValue = true;
+            } else if (input.type !== "radio" && input.type !== "checkbox" && input.value.trim() !== "") {
+              hasValue = true;
+            }
+          });
+
+          if (!hasValue) {
+            isValid = false;
+            block.classList.add("error");
+
+            const title = block.querySelector(".q-title");
+            if (title && !title.querySelector(".required-text")) {
+              const span = document.createElement("span");
+              span.className = "required-text";
+              span.textContent = "*必填";
+              span.style.color = "red";
+              span.style.fontSize = "13px";
+              span.style.marginLeft = "6px";
+              title.appendChild(span);
+            }
+          }
+        });
+
+        const agree = document.getElementById("CheckBox1");
+        if (agree && !agree.checked) {
+          alert("請先閱讀須知並同意");
+          return;
+        }
+
+        if (!isValid) {
+          document.querySelector(".question_list.error")?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+          return;
+        }
+
+        submitBtn.innerText = "送出中...";
+        submitBtn.classList.add("loading");
+
+        try {
+          form.submit();
+        } catch (err) {
+          alert("表單送出失敗，請稍後再試");
+          submitBtn.innerText = "送出";
+          submitBtn.classList.remove("loading");
+          return;
+        }
+
+        iframe.onload = function () {
+          modal.style.display = "flex";
+          document.getElementById("modalMessage").innerHTML = "送出成功！";
+          submitBtn.innerText = "送出";
+          submitBtn.classList.remove("loading");
+          form.reset();
+          document.querySelectorAll(".required-text").forEach((el) => el.remove());
+        };
+
+        iframe.onerror = function () {
+          alert("表單送出失敗，請稍後再試");
+          submitBtn.innerText = "送出";
+          submitBtn.classList.remove("loading");
+        };
+      });
+
       $(function () {
         $("#loginBtn").on("click", function () {
           var account = $("#txbSN").val().trim();
           var password = $("#txbPW").val().trim();
 
-          // 清空訊息
           $("#statusMessageSN").text("");
           $("#statusMessagePW").text("");
 
-          var hasError = false;
+          let hasError = false;
 
-          // 身分證格式驗證 (台灣)
+          // 身分證驗證
           var idPattern = /^[A-Z][12]\d{8}$/i;
           if (account === "") {
             $("#statusMessageSN").text("請輸入帳號");
             hasError = true;
           } else if (!idPattern.test(account)) {
-            $("#statusMessageSN").text("帳號格式錯誤，請輸入正確身分證字號");
+            $("#statusMessageSN").text("帳號格式錯誤");
             hasError = true;
           }
 
-          // 密碼驗證 YYYYMMDD
+          // 生日驗證
           var datePattern = /^(19|20)\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])$/;
           if (password === "") {
             $("#statusMessagePW").text("請輸入密碼");
             hasError = true;
           } else if (!datePattern.test(password)) {
-            $("#statusMessagePW").text("密碼格式錯誤，請輸入西元生日，範例：19500102");
+            $("#statusMessagePW").text("密碼格式錯誤（YYYYMMDD）");
             hasError = true;
           }
 
           if (hasError) return;
 
-          // ===== 模擬後端判斷各種情況 =====
-          var groupNotDeparted = false; // 尚未出發
-          var returnedOverMonth = false; // 返國超過1個月且無其他報名
-          var hasActiveGroup = true; // 有正在參加的團體
+          /* ===========================
+       狀態判斷（3種情境）
+    =========================== */
+          var groupNotDeparted = false;
+          var returnedOverMonth = false;
+
+          let msg = "";
 
           if (groupNotDeparted) {
-            $("#modalMessage").html("此團尚未出發");
-            $("#statusModal").css("display", "flex");
+            msg = "此團尚未出發";
           } else if (returnedOverMonth) {
-            $("#modalMessage").html("感謝您的意見回饋<br>期待下次再相逢");
-            $("#statusModal").css("display", "flex");
-          } else if (hasActiveGroup) {
-            // 已出團且有團體 → 直接跳轉填表頁
-            window.location.href = "Feedback_Form_Add.html";
+            msg = "感謝您的意見回饋<br>期待下次再相逢";
+          } else {
+            msg = "登入成功！";
           }
-        });
 
-        // 關閉 modal
-        $("#modalClose").on("click", function () {
-          $("#statusModal").hide();
+          $("#modalMessage").html(msg);
+          modal.style.display = "flex";
         });
+      });
 
-        // 點背景關閉
-        $("#statusModal").on("click", function (e) {
-          if (e.target === this) $(this).hide();
-        });
+      closeBtn?.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      $("#statusModal").on("click", function (e) {
+        if (e.target === this) $(this).hide();
       });
     </script>
   </body>

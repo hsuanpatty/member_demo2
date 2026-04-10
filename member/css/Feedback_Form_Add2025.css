@@ -356,7 +356,7 @@ p, li { letter-spacing: 0.02rem; }
 
 /* Q15 文字框 */
 #Q15_1_1,
-#Q15_1_2 { width: 60px; margin-right: 6px; }
+#Q15_1_2 { width: 80px; margin-right: 6px; }
 
 #Q16 {
   padding-top: 15px;
@@ -487,7 +487,6 @@ p, li { letter-spacing: 0.02rem; }
     background-color: rgb(243, 243, 243);
   }
 }
-
 
 @media (max-width: 992px) { 
   .test { gap: 10px 15px; } 

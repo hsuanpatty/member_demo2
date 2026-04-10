@@ -106,18 +106,29 @@ p, li { letter-spacing: 0.02rem; }
   color: #1e293b;              
   font-weight: 500;
   
-  /* 卡片設計 */
-  background-color: rgb(233, 233, 233);
-  border: 1px solid #f1f5f9;   
+  /* 卡片背景 */
+  background-color: rgb(243, 243, 243);
+  
+  /* ⭐ 邊線升級（重點） */
+  border: 1px solid #858585;
+  
   border-radius: 12px;        
   
-  /* 柔和的立體陰影 */
+  /* 柔和陰影 */
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 
               0 2px 4px -2px rgba(0, 0, 0, 0.05);
   
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
   overflow: hidden;
+}
+
+.q-label {
+  font-size: 17px;
+  letter-spacing: 0.05rem;  
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.6;
 }
 
 /* 滑鼠懸停效果：讓題目更有互動感 */
@@ -165,7 +176,7 @@ p, li { letter-spacing: 0.02rem; }
 .question_list span label {
   display: inline-flex;     
   align-items: center;
-  white-space: nowrap;        
+  white-space: normal;        
   line-height: 1.6;
   cursor: pointer;
 
@@ -282,9 +293,29 @@ p, li { letter-spacing: 0.02rem; }
 
 
 /* 星星 */
+
 .question_list .q-title {
+  font-size: 18px;
+  line-height: 30px;
+  letter-spacing: 0.1rem;
   align-items: start;
   padding-bottom: 10px;
+
+
+  display: inline-flex;      
+  white-space: normal;  
+  gap: 4px;
+}
+
+.question_list.required .q-title {
+  position: relative;
+  padding-right: 20px;
+}
+
+.question_list.required .q-title::after {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .question_list.required {
@@ -296,7 +327,9 @@ p, li { letter-spacing: 0.02rem; }
   content: "*";
   color: red;
   font-weight: bold;
-  margin-left: 4px;
+  font-size: 16px;   
+  margin-left: 2px;
+  flex-shrink: 0;    
 }
 
 /* 錯誤題目隱藏紅星 */
@@ -377,7 +410,7 @@ p, li { letter-spacing: 0.02rem; }
   transform: translateY(-1px);
 }
 
-/* 自定義滾動條 (選配，適用於 Chrome/Edge/Safari) */
+/* 自定義滾動條 */
 #Q16 textarea::-webkit-scrollbar {
   width: 8px;
 }
@@ -464,7 +497,11 @@ p, li { letter-spacing: 0.02rem; }
 }
 
 @media (max-width: 768px) {
-  .test { flex-direction: column; }
+
+  .test {
+    flex-direction: column;
+  }
+
   .question_Data,
   .question_Data2,
   .question_list,
@@ -474,7 +511,9 @@ p, li { letter-spacing: 0.02rem; }
     max-width: 100%;
   }
 
-  .question_list { font-size: 16px; }
+  .question_list {
+    font-size: 16px;
+  }
 
   .question_list > span {
     display: grid;
@@ -484,7 +523,7 @@ p, li { letter-spacing: 0.02rem; }
     padding: 10px 0;
   }
 
-  /*  Q13 額外說明文字獨立一行 */
+  /* Q13 */
   .question_list.q13 > span > span {
     grid-column: 1 / -1;
     font-size: 14px;
@@ -493,14 +532,67 @@ p, li { letter-spacing: 0.02rem; }
     color: #777;
   }
 
-
-  /* Q1 特殊間距 */
-  .question_list span#Q1 { gap: 6px 14px; }
+  /* Q1 */
+  .question_list span#Q1 {
+    gap: 6px 14px;
+  }
 
   .question_list input[type="radio"],
   .question_list input[type="checkbox"] {
     margin-right: 5px;
-  } 
+  }
+
+  /* ===============================
+     ⭐⭐ 關鍵：標題定位容器
+  ================================= */
+
+  .question_list .q-title {
+    position: relative;
+    display: block;
+    padding-right: 70px; /* 預留右上角空間 */
+  }
+
+  /* ⭐ 星星 */
+  .q-title::after {
+    content: "*";
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    color: red;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  /* ⭐ JS 動態 "*必填" */
+  .q-title .required-text {
+    position: absolute;
+    right: 0;
+    top: -15px;
+
+    color: red;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  /* 錯誤題目隱藏紅星 */
+  .question_list.error .q-title::after {
+    content: "";
+  }
+
+  /* 必填未填 */
+  .question_list input:invalid,
+  .question_list textarea:invalid {
+    border-color: #ef4444;
+    background-color: #fff5f5;
+  }
+
+  .question_list input:invalid:focus,
+  .question_list textarea:invalid:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+  }
+
 }
 
 @media (max-width: 575px) {
@@ -523,6 +615,9 @@ p, li { letter-spacing: 0.02rem; }
      height: 120px; 
    }
    
+  .question_list {
+    padding: 30px 25px 30px 30px;  
+  }
 }
 
 
